@@ -37,9 +37,10 @@ public class Project{
             deckCutted[ (i+(deck.length-cut)) % deck.length] =deck[i];
         }
         return deckCutted;   
+
+
         
-    }
-    
+    }   
     public static int dealCards(Card[] deck,int index,Card[] playersHand,Computer comp){
         for(int i =0;i<8;i++){
             if(i%2==0){
