@@ -1,59 +1,38 @@
-import java.util.ArrayList;
-
-public abstract class Player implements Viewable{
-    private final String name;
-    //hands represent all hands for the game
-    private final ArrayList<Hand> hands;
-    private final ArrayList<Card> capturePile;
-
-    private int handCounter = 0;
-    private int handIndex = -1;
-
-    public Player(String input_name) {
-        name = input_name;
-        hands = new ArrayList<>();
-        capturePile = new ArrayList<>();
+public class Player {
+    private Card[] hand;
+    private Card[] pocket;
+    private int points;
+    private int topOfPocket;
+    private String name;
+    public Player(){
+        hand = new Card[4];
+        pocket = new Card[52];
+        points = 0;
+        topOfPocket = 0;
+        name=" ";
+   }
+    public Card[] getHand(){
+        return hand;
     }
-    //int turn parameter is very effective to know which hand will be used
-    public abstract Card play(int turn);
-    public void addCard(Card card){
-        if(handCounter%4==0){
-            handIndex++;
-            hands.add(new Hand(handIndex+1));
-        }
-        hands.get(handIndex).addCard(card);
-        handCounter++;
+    public Card[] getPocket(){
+        return pocket;
     }
-
-    //1st capture method is casual capture method whereas 2nd one multiplies Card.point with 5
-    public void capture(ArrayList<Card> cards){
-        capturePile.addAll(cards);
+    public int getPoint(){
+        return points;
     }
-    public void capture(ArrayList<Card> cards, boolean isMisti){
-        if(isMisti)
-            for (Card card : cards)
-                card.setPoint(card.getPoint()*5);
-
-        capturePile.addAll(cards);
+    public int getTopOfPocket(){
+        return topOfPocket;
     }
-    //this view method shows captured cards for the player (Geçici method capture doğru çalışıp çalışmadığıyla ilgili sonradan düzenleriz)
-    @Override
-    public void view(){
-        System.out.printf("\n%s's Captured Cards\n", name);
-
-        for(Card card : capturePile)
-            System.out.printf(" %s |", card);
-
+    public void incrementPoint(int add){
+        points += add;
     }
-    public String getName() {
+    public void incrementTopOfPocket(){
+        topOfPocket++;
+    }
+    public void setName(String n){
+        name = n;
+    }
+    public String getName(){
         return name;
-    }
-
-    public ArrayList<Hand> getHands() {
-        return hands;
-    }
-
-    public ArrayList<Card> getCapturePile() {
-        return capturePile;
     }
 }
