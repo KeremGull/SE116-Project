@@ -21,7 +21,7 @@ public class Deck {
     public void cut(){
         Random random = new Random();
         int cut = random.nextInt(10,cards.size()-10);
-        System.out.println(cut);
+        
         ArrayList<Card> cardsCutted = new ArrayList<Card>();
         for(int i =0;i<cards.size();i++){
             cardsCutted.add( cards.get( (cut+i)%cards.size() ) );

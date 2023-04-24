@@ -22,4 +22,9 @@ public class Card{
     public String getFace(){return face;}
     public String getSuit(){return suit;}
     public int getPoint(){return point;}
+
+	@Override
+    public String toString() {
+        return String.format("%s%s %dpts", getSuit(), getFace(), getPoint());
+    }
 }
