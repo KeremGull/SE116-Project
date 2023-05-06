@@ -15,7 +15,7 @@ public class Card{
     }
 
     //Setters and getters
-    public void setsuit(String input){suit = input;}
+    public void setSuit(String input){suit = input;}
     public void setFace(String input){face = input;}
     public void setPoint(int input){point = input;}
 
@@ -23,7 +23,7 @@ public class Card{
     public String getSuit(){return suit;}
     public int getPoint(){return point;}
 
-	@Override
+    @Override
     public String toString() {
         return String.format("%s%s %dpts", getSuit(), getFace(), getPoint());
     }

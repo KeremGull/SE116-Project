@@ -1,11 +1,11 @@
 import java.util.ArrayList;
 
 public class Hand implements Viewable {
-    private final ArrayList<Card> cards;
+    private final Pile cards;
     private final int handNumber;
 
     public Hand(int input_handNumber) {
-        cards = new ArrayList<>();
+        cards = new Pile();
         handNumber = input_handNumber;
     }
 
@@ -13,22 +13,22 @@ public class Hand implements Viewable {
     public void view() {
         System.out.printf("Hand %d:\n", handNumber);
         int counter = 1;
-        for (Card card : cards)
+        for (Card card : cards.getCards())
             System.out.printf("%d) %s \n", counter++, card);
 
     }
     public void remove(Card card){
-        cards.remove(card);
+        cards.removeCard(card);
     }
     //addCard methoduna daha iyi bir isim verilip interface yapılabilir
     // Player için kart dağıtılırken kullandım
     // ve Board için kart dağıtılırken ve oynanırken kullandım
     //Burda da full hande ekleme yaptım
     public void addCard(Card card){
-        cards.add(card);
+        cards.addCard(card);
     }
 
-    public ArrayList<Card> getCards() {
+    public Pile getCards() {
         return cards;
     }
 }

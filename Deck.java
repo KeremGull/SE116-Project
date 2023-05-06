@@ -1,13 +1,12 @@
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
-public class Deck {
-    private ArrayList<Card> cards;
+import java.util.Collections;
+public class Deck extends Pile{
     public Deck(){
         //Creating cards
         String[] suits= {"♠","♣","♥","♦"};
         String[] numbers = {"A","2","3","4","5","6","7","8","9","10","J","K","Q"};
-        cards = new ArrayList<Card>();
+        cards = new ArrayList<>();
         for(int i=0;i<suits.length;i++){
             for(int j =0;j<numbers.length;j++){
                 cards.add(new Card(suits[i],numbers[j]));
@@ -21,14 +20,13 @@ public class Deck {
     public void cut(){
         Random random = new Random();
         int cut = random.nextInt(10,cards.size()-10);
-        
-        ArrayList<Card> cardsCutted = new ArrayList<Card>();
+
+        ArrayList<Card> cardsCutted = new ArrayList<>();
         for(int i =0;i<cards.size();i++){
-            cardsCutted.add( cards.get( (cut+i)%cards.size() ) );
+            cardsCutted.add(cards.get((cut+i)%cards.size()));
         }
         cards = cardsCutted;
-        
+
     }
 
-    public ArrayList<Card> getCards(){return cards;}
 }

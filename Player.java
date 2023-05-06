@@ -4,7 +4,7 @@ public abstract class Player implements Viewable{
     private final String name;
     //hands represent all hands for the game
     private final ArrayList<Hand> hands;
-    private final ArrayList<Card> capturePile;
+    private final Pile capturePile;
 
     private int handCounter = 0;
     private int handIndex = -1;
@@ -12,7 +12,7 @@ public abstract class Player implements Viewable{
     public Player(String input_name) {
         name = input_name;
         hands = new ArrayList<>();
-        capturePile = new ArrayList<>();
+        capturePile = new Pile();
     }
     //int turn parameter is very effective to know which hand will be used
     public abstract Card play(int turn);
@@ -26,22 +26,22 @@ public abstract class Player implements Viewable{
     }
 
     //1st capture method is casual capture method whereas 2nd one multiplies Card.point with 5
-    public void capture(ArrayList<Card> cards){
-        capturePile.addAll(cards);
+    public void capture(Pile cards){
+        capturePile.addCards(cards);
     }
-    public void capture(ArrayList<Card> cards, boolean isMisti){
+    public void capture(Pile cards, boolean isMisti){
         if(isMisti)
-            for (Card card : cards)
+            for (Card card : cards.getCards())
                 card.setPoint(card.getPoint()*5);
 
-        capturePile.addAll(cards);
+        capturePile.addCards(cards);
     }
     //this view method shows captured cards for the player (Geçici method capture doğru çalışıp çalışmadığıyla ilgili sonradan düzenleriz)
     @Override
     public void view(){
         System.out.printf("\n%s's Captured Cards\n", name);
 
-        for(Card card : capturePile)
+        for(Card card : capturePile.getCards())
             System.out.printf(" %s |", card);
 
     }
@@ -53,7 +53,7 @@ public abstract class Player implements Viewable{
         return hands;
     }
 
-    public ArrayList<Card> getCapturePile() {
+    public Pile getCapturePile() {
         return capturePile;
     }
 }

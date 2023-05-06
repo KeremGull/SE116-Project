@@ -11,12 +11,11 @@ public class HumanPlayer extends Player{
         System.out.println("\n"+ getName()+" choose a card to play");
         getHands().get(turn).view();
 
-
         while (true){
             Scanner sc = new Scanner(System.in);
             try{
                 int chosenCard = sc.nextInt();
-                Card playedCard = getHands().get(turn).getCards().get(chosenCard-1);
+                Card playedCard = getHands().get(turn).getCards().getCard(chosenCard-1);
                 getHands().get(turn).remove(playedCard);
                 return playedCard;
 
