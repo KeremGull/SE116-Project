@@ -2,6 +2,9 @@ import java.util.ArrayList;
 
 public class Project {
     public static void main(String[] args) {
+        if(!GameFuncs.checkInputs(args)){
+            return;
+        }
         Deck deck = new Deck();
         for(Card i : deck.getCards()){
             System.out.print(i.getSuit()+i.getFace()+" ");
