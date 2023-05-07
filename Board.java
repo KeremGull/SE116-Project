@@ -7,6 +7,18 @@ public class Board extends Pile implements Viewable, Clearable {
         cards = new ArrayList<>();
     }
 
+    public Card getTopCard() {
+        return cards.get(cards.size() - 1);
+    }
+
+    public int getPoints() {
+        int points = 0;
+        for (Card card: cards) {
+            points += card.getPoint();
+        }
+        return points;
+    }
+
     //When a player plays a card to the board
     public void addCard(Card card, Player player){
         cards.add(card);

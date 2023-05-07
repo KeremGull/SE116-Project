@@ -22,7 +22,7 @@ public class Project {
         ArrayList<Player> players = new ArrayList<>();
         players.add(new HumanPlayer("Cinar"));
         players.add(new HumanPlayer("Kerem"));
-        players.add(new HumanPlayer("Melih"));
+        players.add(new RegularBot("John", board));
 
         //Dealing cards to players
         for(int i=51; i>47; i--)
