@@ -1,10 +1,9 @@
 import java.util.Random;
-
 public class NoviceBot extends Player{
     public NoviceBot(String name) {
         super(name);
     }
-
+    
     @Override
     public Card play(int turn) {
         Random random = new Random();

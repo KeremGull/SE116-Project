@@ -1,10 +1,14 @@
 import java.util.ArrayList;
-
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.Files;
 public class Project {
     public static void main(String[] args) {
         if(!GameFuncs.checkInputs(args)){
             return;
         }
+        Path pointsPath = Paths.get(args[1]);
+        FileOps.setPointPath(pointsPath);
         Deck deck = new Deck();
         for(Card i : deck.getCards()){
             System.out.print(i.getSuit()+i.getFace()+" ");
@@ -20,12 +24,13 @@ public class Project {
             System.out.print(i.getSuit()+i.getFace()+" ");
         }
 
+
+
         //Instantiating game objects (Board and Player)
         Board board = new Board();
-        ArrayList<Player> players = new ArrayList<>();
-        players.add(new HumanPlayer("Cinar"));
-        players.add(new HumanPlayer("Kerem"));
-        players.add(new RegularBot("John", board));
+        int numberOfPlayers = Integer.parseInt(args[0]);
+        boolean verboseMode = Boolean.parseBoolean(args[2]);
+        ArrayList<Player> players = GameFuncs.setPlayers(args, numberOfPlayers,board);
 
         //Dealing cards to players
         for(int i=51; i>47; i--)

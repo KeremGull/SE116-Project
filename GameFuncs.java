@@ -2,6 +2,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.io.File;
 import java.nio.file.Files;
+import java.util.ArrayList;
 public class GameFuncs {
     public static void helpMessage(){
         System.out.println("The program must has these arguments before executing:");
@@ -10,7 +11,7 @@ public class GameFuncs {
         System.out.println("Third Argument: Boolean Value(true or false) For Verboseness mode.");
         System.out.println("Next Arguments: A Name for Player(If there is one) or Bots' Difficulty levels");
         System.out.println();
-        System.out.println("CONSTRAINTS:");
+        System.out.println("COSTRAINTS:");
         System.out.println("Bots' difficulty levels are Novice, Regular and Expert.");
         System.out.println("Player's name can't contain any spaces and can't be Novice, Regular or Expert");
         System.out.println("Path cannot contain following characters: \\, /, :, *, ?, \", <, >, |.");
@@ -91,5 +92,29 @@ public class GameFuncs {
             }
         }
         return true;
+    }
+    public static String checkSuit(String suit){
+        String[][] a = {{"♠","S","s"},{"♣","C","c"},{"♥","H","h"},{"♦","D","d"}};
+        for(int i =0;i<4;i++)
+            for(int j = 0;j<3;j++)
+                if(suit.equals(a[i][j]))
+                    return a[i][0];  
+        return suit;
+    }
+
+    public static ArrayList<Player> setPlayers(String[] args,int numberOfPlayers,Board board){
+        ArrayList<Player> result = new ArrayList<>();
+        for(int i =3;i<3+numberOfPlayers;i++){
+            if(args[i].equalsIgnoreCase("Novice")){
+                result.add(new NoviceBot("Çınar"));
+            }else if(args[i].equalsIgnoreCase("Regular")){
+                result.add(new RegularBot("Alperen",board));
+            }else if(args[i].equalsIgnoreCase("Expert")){
+                result.add(new ExpertBot("Kerem",board));
+            }else{
+                result.add(new HumanPlayer(args[i]));
+            }
+        }
+        return result;
     }
 }
