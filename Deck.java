@@ -7,9 +7,9 @@ public class Deck extends Pile{
         String[] suits= {"♠","♣","♥","♦"};
         String[] numbers = {"A","2","3","4","5","6","7","8","9","10","J","K","Q"};
         cards = new ArrayList<>();
-        for(int i=0;i<suits.length;i++){
-            for(int j =0;j<numbers.length;j++){
-                cards.add(new Card(suits[i],numbers[j]));
+        for(String suit : suits){
+            for(String number : numbers){
+                cards.add(new Card(suit,number));
             }
         }
     }
@@ -26,7 +26,6 @@ public class Deck extends Pile{
             cardsCutted.add(cards.get((cut+i)%cards.size()));
         }
         cards = cardsCutted;
-
     }
 
 }

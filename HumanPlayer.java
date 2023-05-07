@@ -15,8 +15,8 @@ public class HumanPlayer extends Player{
             Scanner sc = new Scanner(System.in);
             try{
                 int chosenCard = sc.nextInt();
-                Card playedCard = getHands().get(turn).getCards().getCard(chosenCard-1);
-                getHands().get(turn).remove(playedCard);
+                Card playedCard = getHands().get(turn).getCard(chosenCard-1);
+                getHands().get(turn).removeCard(playedCard);
                 return playedCard;
 
             }catch (InputMismatchException err){

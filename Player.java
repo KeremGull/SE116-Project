@@ -2,10 +2,11 @@ import java.util.ArrayList;
 
 public abstract class Player implements Viewable{
     private final String name;
+    private final Pile capturePile;
     //hands represent all hands for the game
     private final ArrayList<Hand> hands;
-    private final Pile capturePile;
 
+    //Temp members for arrange hands
     private int handCounter = 0;
     private int handIndex = -1;
 

@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.List;
 
 public class Pile {
     protected ArrayList<Card> cards;
@@ -18,9 +17,6 @@ public class Pile {
     }
     public void removeCard(Card a){
         cards.remove(a);
-    }
-    public void removeCards(Pile a){
-        cards.removeAll(a.getCards());
     }
     public Card getCard(int i){
         return cards.get(i);
