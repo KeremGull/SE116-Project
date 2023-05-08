@@ -9,14 +9,13 @@ public class GameFuncs {
         System.out.println("First Argument: Number of Players(Integer between 2-4)");
         System.out.println("Second Argument: Path of File Which Contains Point Configuration For Cards");
         System.out.println("Third Argument: Boolean Value(true or false) For Verboseness mode.");
-        System.out.println("Next Arguments: A Name for Player(If there is one) or Bots' Difficulty levels");
+        System.out.println("Next Arguments: Name and expertise level for every player.Format should be like this:{name} {N,R,E,H}");
         System.out.println();
-        System.out.println("COSTRAINTS:");
-        System.out.println("Bots' difficulty levels are Novice, Regular and Expert.");
-        System.out.println("Player's name can't contain any spaces and can't be Novice, Regular or Expert");
+        System.out.println("CONSTRAINTS:");
         System.out.println("Path cannot contain following characters: \\, /, :, *, ?, \", <, >, |.");
         System.out.println("Path must be given even the file does not exist or empty.");
         System.out.println("Path of file must be a text file with .txt extension.");
+        System.out.println("Any 2 of the players must have different names.");
     }
     public static boolean checkInputs(String[] args){
         if(args.length == 0){
@@ -74,21 +73,34 @@ public class GameFuncs {
         }
 
         //Check for players
-        if(args.length < 3+numberOfPlayers){
-            System.out.println("Please input name or bot level for every player!!!");
+        if(args.length < 3+(numberOfPlayers*2)){
+            System.out.println("Please input name and player information for every player! Format should be like this:{name} {N,R,E,H}");
             return false;
         }
         boolean haveHumanPlayer = false;
-        for(int i =3;i<3+numberOfPlayers;i++){
-            if(!args[i].equalsIgnoreCase("novice") && 
-            !args[i].equalsIgnoreCase("regular") && 
-            !args[i].equalsIgnoreCase("expert")){
-                if(haveHumanPlayer){
-                    System.out.println("There can be only one human player!!");
-                    return false;
-                }else{
-                    haveHumanPlayer = true;
+        String[] expertises = {"N","R","H","E"};
+        for(int i =4;i<3+(numberOfPlayers*2);i+=2){
+            boolean isValid = false;
+            for(int j = 0;j<expertises.length;j++){
+                if(args[i].equals(expertises[j])) isValid = true;
+                
+                if(args[i].equals("J")){
+                    if(haveHumanPlayer){
+                        System.out.println("There can be only one human player!!");
+                        return false;
+                    }else haveHumanPlayer = true;       
                 }
+            }
+            if(!isValid){
+                System.out.println("One of the expertises is in incorrect form!!!");
+                return false;
+            }
+        }
+        String temp = args[3];
+        for(int i = 5;i<3+(numberOfPlayers*2);i+=2){
+            if(temp.equalsIgnoreCase(args[i])){
+                System.out.println("Players must have unique names!!!");
+                return false;
             }
         }
         return true;
@@ -104,15 +116,15 @@ public class GameFuncs {
 
     public static ArrayList<Player> setPlayers(String[] args,int numberOfPlayers,Board board){
         ArrayList<Player> result = new ArrayList<>();
-        for(int i =3;i<3+numberOfPlayers;i++){
-            if(args[i].equalsIgnoreCase("Novice")){
-                result.add(new NoviceBot("Çınar"));
-            }else if(args[i].equalsIgnoreCase("Regular")){
-                result.add(new RegularBot("Alperen",board));
-            }else if(args[i].equalsIgnoreCase("Expert")){
-                result.add(new ExpertBot("Kerem",board));
+        for(int i =4;i<3+(numberOfPlayers*2);i+=2){
+            if(args[i].equalsIgnoreCase("N")){
+                result.add(new NoviceBot(args[i-1]));
+            }else if(args[i].equalsIgnoreCase("R")){
+                result.add(new RegularBot(args[i-1],board));
+            }else if(args[i].equalsIgnoreCase("E")){
+                result.add(new ExpertBot(args[i-1],board));
             }else{
-                result.add(new HumanPlayer(args[i]));
+                result.add(new HumanPlayer(args[i-1]));
             }
         }
         return result;
