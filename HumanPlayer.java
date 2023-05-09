@@ -17,6 +17,7 @@ public class HumanPlayer extends Player{
                 int chosenCard = sc.nextInt();
                 Card playedCard = getHands().get(turn).getCard(chosenCard-1);
                 getHands().get(turn).removeCard(playedCard);
+                PlayedCards.addCard(playedCard);
                 return playedCard;
 
             }catch (InputMismatchException err){
