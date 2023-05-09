@@ -1,17 +1,18 @@
 import java.util.ArrayList;
 
-public class Board extends Pile implements Viewable, Clearable {
-    private Player lastCapturer;
+public class Board extends Pile {
+    private static Player lastCapturer;
+    private static ArrayList<Card> cards;
 
     public Board() {
         cards = new ArrayList<>();
     }
 
-    public Card getTopCard() {
+    public static Card getTopCard() {
         return cards.get(cards.size() - 1);
     }
 
-    public int getPoints() {
+    public static int getPoints() {
         int points = 0;
         for (Card card: cards) {
             points += card.getPoint();
@@ -19,9 +20,14 @@ public class Board extends Pile implements Viewable, Clearable {
         return points;
     }
 
+    public static void boardAddCardToPlayer(Card a){
+        cards.add(a);
+    }
+
     //When a player plays a card to the board
-    public void addCard(Card card, Player player){
+    public static void boardAddCardToPlayer(Card card, Player player){
         cards.add(card);
+        Board boardInstance = new Board();
 
         //Checks for Misti
         if(cards.size()>1){
@@ -29,10 +35,10 @@ public class Board extends Pile implements Viewable, Clearable {
 
                 if(cards.size()>2){
                     System.out.printf("\n%s captured the board!\n", player.getName());
-                    player.capture(this);
+                    player.capture(boardInstance);
                 } else{
                     System.out.printf("\nMISTI!! (by %s)\n", player.getName());
-                    player.capture(this, true);
+                    player.capture(boardInstance, true);
                 }
 
                 lastCapturer = player;
@@ -40,20 +46,19 @@ public class Board extends Pile implements Viewable, Clearable {
             } else if (card.getFace().equals("J")) {
 
                 System.out.printf("\n%s played J to capture board\n", player.getName());
-                player.capture(this);
+                player.capture(boardInstance);
                 lastCapturer = player;
 
                 clear();
             }
         }
     }
-    @Override
-    public void clear() {
+    
+    public static void clear() {
         cards = new ArrayList<>();
     }
 
-    @Override
-    public void view() {
+    public static void view() {
         for (int i = cards.size()-1; i>=0; i--) {
             if(i== cards.size()-1)
                 System.out.println("\n"+ cards.get(i) );
@@ -62,10 +67,11 @@ public class Board extends Pile implements Viewable, Clearable {
         }
     }
     //After the last card is played any remaining uncaptured cards goes to player who captured latest
-    public void remainingBoard(){
+    public static void remainingBoard(){
+        Board boardInstance = new Board();
         if(cards.size() !=0){
             System.out.println("Remaining cards goes to "+ lastCapturer.getName());
-            lastCapturer.capture(this);
+            lastCapturer.capture(boardInstance);
             clear();
         }
     }
