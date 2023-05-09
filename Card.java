@@ -27,4 +27,7 @@ public class Card{
     public String toString() {
         return String.format("%s%s %dpts", getSuit(), getFace(), getPoint());
     }
+    public String toStringWithoutPoint(){
+        return String.format("%s%s", getSuit(), getFace());
+    }
 }

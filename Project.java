@@ -31,7 +31,6 @@ public class Project {
         int numberOfPlayers = Integer.parseInt(args[0]);
         boolean verboseMode = Boolean.parseBoolean(args[2]);
         ArrayList<Player> players = GameFuncs.setPlayers(args, numberOfPlayers,board);
-
         //Dealing cards to players
         for(int i=51; i>47; i--)
             board.addCard(deck.getCards().get(i));
@@ -45,19 +44,34 @@ public class Project {
         board.view();
         System.out.println();
 
-        for(int turn=0; turn< 12/players.size();turn++)
-            for(int i=0;i<4;i++)
+        for(int turn=0; turn< 12/players.size();turn++){
+            for(int i=0;i<4;i++){
                 for(Player player : players){
                     board.addCard(player.play(turn), player);
                     board.view();
                     System.out.println();
                 }
+            }
+            if(!verboseMode){
+                for(Player player : players){
+                    board.addCard(player.play(turn), player);
+                    board.view();
+                    System.out.println();
+                }
+            }
+        }
         board.remainingBoard();
 
         System.out.println("\n-----------------------------------------------------------------------------\n");
         for (Player player : players) {
             player.view();
+            System.out.println(player.getPoint());
         }
+        String context = FileOps.readFile("TopPlayers.txt");
+        ArrayList<TopPlayer> topPlayers = FileOps.getTopTen(context);
+        FileOps.sortTopTen(topPlayers, players);
+        FileOps.updateTopTen(topPlayers);
+
 
     }
 }

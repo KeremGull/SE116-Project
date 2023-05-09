@@ -3,6 +3,7 @@ import java.nio.file.Paths;
 import java.io.File;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Scanner;
 public class GameFuncs {
     public static void helpMessage(){
         System.out.println("The program must has these arguments before executing:");
@@ -129,4 +130,13 @@ public class GameFuncs {
         }
         return result;
     }
+
+    public static String getExpertise(Player player){
+        if(player instanceof HumanPlayer) return "H";
+        if(player instanceof RegularBot) return "R";
+        if(player instanceof ExpertBot) return "E";
+        if(player instanceof NoviceBot) return "N";
+        return "";
+    }
+
 }
