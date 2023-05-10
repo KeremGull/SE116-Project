@@ -22,6 +22,9 @@ public class PlayedCards {
             faceCounts.put(face, 1);
         }
     }
+    public static void removeTopCard(){
+        playedCards.remove(playedCards.size()-1);
+    }
 
     //Returns the list of the cards that were played.
     public static ArrayList<Card> getCards() {

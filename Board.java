@@ -23,6 +23,8 @@ public class Board extends Pile implements Viewable, Clearable {
     public void addCard(Card card, Player player){
         cards.add(card);
         PlayedCards.addCard(card);
+        if(player.getClass().toString().equals("class ExpertBot"))
+            PlayedCards.removeTopCard();
 
         //Checks for Misti
         if(cards.size()>1){
