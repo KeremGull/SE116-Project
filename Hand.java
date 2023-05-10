@@ -3,6 +3,11 @@ import java.util.ArrayList;
 public class Hand extends Pile implements Viewable {
     private final int handNumber;
 
+    public Hand(Hand hand) {
+        this.addCards(hand);
+        handNumber = hand.handNumber;
+    }
+
     public Hand(int input_handNumber) {
         cards = new ArrayList<>();
         handNumber = input_handNumber;

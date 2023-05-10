@@ -7,6 +7,7 @@ public abstract class Player implements Viewable{
     private int point;
     //hands represent all hands for the game
     private final ArrayList<Hand> hands;
+    private final ArrayList<Hand> verboseHands;
 
     //Temp members for arrange hands
     private int handCounter = 0;
@@ -17,6 +18,7 @@ public abstract class Player implements Viewable{
         hands = new ArrayList<>();
         capturePile = new Pile();
         point = 0;
+        verboseHands = new ArrayList<>();
     }
     //int turn parameter is very effective to know which hand will be used
     public abstract Card play(int turn);
@@ -27,6 +29,9 @@ public abstract class Player implements Viewable{
         }
         hands.get(handIndex).addCard(card);
         handCounter++;
+        if(handCounter%4==0){
+            verboseHands.add(new Hand(hands.get(handIndex)));
+        }
     }
 
     //1st capture method is casual capture method whereas 2nd one multiplies Card.point with 5
@@ -37,17 +42,19 @@ public abstract class Player implements Viewable{
         capturePile.addCards(cards);
     }
     public void capture(Pile cards, boolean isMisti){
-        if(isMisti)
+        if(isMisti){
             for (Card card : cards.getCards()){
                 point += card.getPoint() *5;
-                capturePile.addCards(cards);
+                capturePile.addCard(card);
             }
+            PlayedCards.mistiList.add(cards.getCard(1));
+        }
         else{
             capture(cards);
         }
+
             
     }
-    //this view method shows captured cards for the player (Geçici method capture doğru çalışıp çalışmadığıyla ilgili sonradan düzenleriz)
     @Override
     public void view(){
         
@@ -65,6 +72,10 @@ public abstract class Player implements Viewable{
     }
     public int getPoint(){
         return point;
+    }
+
+    public ArrayList<Hand> getVerboseHands() {
+        return verboseHands;
     }
 
     public boolean isBoardEmpty(Board playsOn) {

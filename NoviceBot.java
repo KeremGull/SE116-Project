@@ -10,7 +10,6 @@ public class NoviceBot extends Player{
         int chosenCard = random.nextInt(1, getHands().get(turn).size() + 1);
         Card playedCard = getHands().get(turn).getCard(chosenCard-1);
         getHands().get(turn).removeCard(playedCard);
-        PlayedCards.addCard(playedCard);
         return playedCard;
     }
 }

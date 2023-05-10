@@ -22,6 +22,7 @@ public class Board extends Pile implements Viewable, Clearable {
     //When a player plays a card to the board
     public void addCard(Card card, Player player){
         cards.add(card);
+        PlayedCards.addCard(card);
 
         //Checks for Misti
         if(cards.size()>1){

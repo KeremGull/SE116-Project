@@ -13,17 +13,14 @@ public class ExpertBot extends Player{
     public Card play(int turn) {
         Hand currentHand = getHands().get(turn);
         Card card;
-        currentHand.view();
 
         if (isBoardEmpty(playsOn)) {
             if (hasNonJoker(currentHand)) {
                 card = findBestCard(currentHand);
-                PlayedCards.addCard(card);
                 currentHand.removeCard(card);
                 return(card);
             }
             card = findCard(currentHand, "J");
-            PlayedCards.addCard(card);
             currentHand.removeCard(card);
             return(card);
         }
@@ -31,18 +28,15 @@ public class ExpertBot extends Player{
             Card matchingCard = findCard(currentHand, playsOn.getTopCard().getSuit(), playsOn.getTopCard().getFace());
             if(matchingCard != null && (matchingCard.getPoint() + playsOn.getPoints() > 0 && matchingCard.getPoint() > 10)) {
                 card = matchingCard;
-                PlayedCards.addCard(card);
                 currentHand.removeCard(card);
                 return(card);
             }
             if(hasJoker(getHands().get(turn)) && (10 + playsOn.getPoints() > 0)) {
                 card = findCard(currentHand, "J");
-                PlayedCards.addCard(card);
                 currentHand.removeCard(card);
                 return(card);
             }
             card = findBestCard(currentHand);
-            PlayedCards.addCard(card);
             currentHand.removeCard(card);
             return(card);
         }

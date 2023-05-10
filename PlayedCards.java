@@ -4,9 +4,10 @@ import java.util.Map;
 
 public class PlayedCards {
 
-    private static ArrayList<Card> playedCards = new ArrayList<>();
+    private static final ArrayList<Card> playedCards = new ArrayList<>();
+    public static final ArrayList<Card> mistiList = new ArrayList<>();
     private static final String[] faces = {"A","2","3","4","5","6","7","8","9","10","J","K","Q"};
-    private static Map<String, Integer> faceCounts = new HashMap<>();
+    private static final Map<String, Integer> faceCounts = new HashMap<>();
     private static final Deck sampleDeck = new Deck();
 
     //Adds the chosen card to the playedCards list.
