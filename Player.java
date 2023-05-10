@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public abstract class Player implements Viewable{
     private final String name;
@@ -65,4 +66,77 @@ public abstract class Player implements Viewable{
     public int getPoint(){
         return point;
     }
+
+    public boolean isBoardEmpty(Board playsOn) {
+        if (playsOn.getCards().size() == 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean hasJoker(Hand hand) {
+        for (Card card: hand.getCards()) {
+            if (card.getFace().equals("J")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /*
+    This method returns a desired card.
+    If the desired card does not exist, it returns null.
+    */
+    public Card findCard(Hand hand, String suit, String face) {
+        for (Card card: hand.getCards()) {
+            if (card.getFace().equals(face) && card.getSuit().equals(suit)) {
+                return card;
+            }
+        }
+        return null;
+    }
+
+    public Card findCard(Hand hand, String face) {
+        for (Card card: hand.getCards()) {
+            if (card.getFace().equals(face)) {
+                return card;
+            }
+        }
+        return null;
+    }
+
+    public Card findCardWithLeastPts(Hand hand) {
+        Card currentCard = hand.getCard(0);
+        for (int i = 1; i < hand.size(); i++) {
+            if (hand.getCard(i).getPoint() < currentCard.getPoint()) {
+                currentCard = hand.getCard(i);
+            }
+        }
+        return currentCard;
+    }
+
+    public Card findCardWithMostPts(Hand hand) {
+        Card currentCard = hand.getCard(0);
+        for (int i = 1; i < hand.size(); i++) {
+            if (hand.getCard(i).getPoint() > currentCard.getPoint()) {
+                currentCard = hand.getCard(i);
+            }
+        }
+        return currentCard;
+    }
+
+    public boolean hasNonJoker(Hand hand) {
+        for (Card card: hand.getCards()) {
+            if (!card.getFace().equals("J")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Card getRandomCard(Hand hand) {
+        Random random = new Random();
+        return(hand.getCard(random.nextInt(0, hand.size())));
+    }
+
 }

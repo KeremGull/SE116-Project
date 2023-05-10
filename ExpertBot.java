@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Collections;
+
 public class ExpertBot extends Player{
     private Board playsOn;
     public ExpertBot(String name, Board playsOn) {
@@ -6,6 +10,71 @@ public class ExpertBot extends Player{
     }
 
     @Override
-    public Card play(int turn) {return null;}
+    public Card play(int turn) {
+        Hand currentHand = getHands().get(turn);
+        Card card;
 
+        if (isBoardEmpty(playsOn)) {
+            if (hasNonJoker(getHands().get(turn))) {
+                card = findBestCard(currentHand);
+                PlayedCards.addCard(card);
+                currentHand.removeCard(card);
+                return(card);
+            }
+            card = findCard(currentHand, "J");
+            PlayedCards.addCard(card);
+            currentHand.removeCard(card);
+            return(card);
+        }
+        else {
+            Card matchingCard = findCard(currentHand, playsOn.getTopCard().getSuit(), playsOn.getTopCard().getFace());
+            if(matchingCard != null && (matchingCard.getPoint() + playsOn.getPoints() > 0 && matchingCard.getPoint() > 10)) {
+                card = matchingCard;
+                PlayedCards.addCard(card);
+                currentHand.removeCard(card);
+                return(card);
+            }
+            if(hasJoker(getHands().get(turn)) && (10 + playsOn.getPoints() > 0)) {
+                card = findCard(currentHand, "J");
+                PlayedCards.addCard(card);
+                currentHand.removeCard(card);
+                return(card);
+            }
+            card = findBestCard(currentHand);
+            PlayedCards.addCard(card);
+            currentHand.removeCard(card);
+            return(card);
+        }
+    }
+
+    public Card findBestCard(Hand hand) {
+        int mostOccurrence = 0;
+        ArrayList<Card> mostOccurredCards = new ArrayList<>();
+        for (Card card: hand.getCards()) {
+            for (Map.Entry<String, Integer> pair: PlayedCards.getFaceCounts().entrySet()) {
+                if (pair.getKey().equals(card.getFace()) && pair.getValue() > mostOccurrence) {
+                    mostOccurrence = pair.getValue();
+                }
+            }
+        }
+
+        for (Card card : hand.getCards()) {
+            for (Map.Entry<String, Integer> pair: PlayedCards.getFaceCounts().entrySet()) {
+                if (pair.getValue() == mostOccurrence && pair.getKey().equals(card.getFace())) {
+                    mostOccurredCards.add(card);
+                }
+            }
+        }
+
+        Card bestCard = mostOccurredCards.get(0);
+        if (mostOccurredCards.size() == 1) {
+            return bestCard;
+        }
+        for (int i = 1; i < mostOccurredCards.size(); i++) {
+            if (mostOccurredCards.get(i).getPoint() < bestCard.getPoint()) {
+                bestCard = mostOccurredCards.get(i);
+            }
+        }
+        return bestCard;
+    }
 }
