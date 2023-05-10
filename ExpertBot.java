@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.Collections;
+
 
 public class ExpertBot extends Player{
     private Board playsOn;
@@ -13,9 +13,10 @@ public class ExpertBot extends Player{
     public Card play(int turn) {
         Hand currentHand = getHands().get(turn);
         Card card;
+        currentHand.view();
 
         if (isBoardEmpty(playsOn)) {
-            if (hasNonJoker(getHands().get(turn))) {
+            if (hasNonJoker(currentHand)) {
                 card = findBestCard(currentHand);
                 PlayedCards.addCard(card);
                 currentHand.removeCard(card);
@@ -61,9 +62,15 @@ public class ExpertBot extends Player{
         for (Card card : hand.getCards()) {
             for (Map.Entry<String, Integer> pair: PlayedCards.getFaceCounts().entrySet()) {
                 if (pair.getValue() == mostOccurrence && pair.getKey().equals(card.getFace())) {
-                    mostOccurredCards.add(card);
+                    if(isBoardEmpty(playsOn)){
+                        mostOccurredCards.add(card);
+                    }
+
                 }
             }
+        }
+        if(mostOccurredCards.size() == 0){
+            return getRandomCard(hand);
         }
 
         Card bestCard = mostOccurredCards.get(0);
