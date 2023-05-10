@@ -53,7 +53,7 @@ public class ExpertBot extends Player{
         ArrayList<Card> mostOccurredCards = new ArrayList<>();
         for (Card card: hand.getCards()) {
             for (Map.Entry<String, Integer> pair: PlayedCards.getFaceCounts().entrySet()) {
-                if (pair.getKey().equals(card.getFace()) && pair.getValue() > mostOccurrence) {
+                if (pair.getKey().equals(card.getFace()) && !pair.getKey().equals("J") && pair.getValue() > mostOccurrence) {
                     mostOccurrence = pair.getValue();
                 }
             }
@@ -62,15 +62,13 @@ public class ExpertBot extends Player{
         for (Card card : hand.getCards()) {
             for (Map.Entry<String, Integer> pair: PlayedCards.getFaceCounts().entrySet()) {
                 if (pair.getValue() == mostOccurrence && pair.getKey().equals(card.getFace())) {
-                    if(isBoardEmpty(playsOn)){
-                        mostOccurredCards.add(card);
-                    }
+                    mostOccurredCards.add(card);
 
                 }
             }
         }
         if(mostOccurredCards.size() == 0){
-            return getRandomCard(hand);
+            return findCardWithLeastPts(hand);
         }
 
         Card bestCard = mostOccurredCards.get(0);
