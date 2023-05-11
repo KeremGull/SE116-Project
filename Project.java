@@ -42,12 +42,15 @@ public class Project {
                     System.out.println();
                 }
             }
-            if(verboseMode)
+            if(verboseMode){
                 verbose.summary(turn);
+                board.view();
+            }
+                
         }
         board.remainingBoard();
         if(verboseMode)
-            verbose.gameSummary();
+            verbose.gameSummary();  
 
         System.out.println("\n-----------------------------------------------------------------------------\n");
         for (Player player : players) {

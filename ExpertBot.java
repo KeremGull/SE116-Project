@@ -12,7 +12,7 @@ public class ExpertBot extends Player{
     @Override
     public Card play(int turn) {
         Hand currentHand = getHands().get(turn);
-        Card card;
+        Card card = currentHand.getCard(0);
 
         if (isBoardEmpty(playsOn)) {
             if (hasNonJoker(currentHand)) {
@@ -25,7 +25,7 @@ public class ExpertBot extends Player{
             return(card);
         }
         else {
-            Card matchingCard = findCard(currentHand, playsOn.getTopCard().getSuit(), playsOn.getTopCard().getFace());
+            Card matchingCard = findCard(currentHand,playsOn.getTopCard().getFace());
             if(matchingCard != null && (matchingCard.getPoint() + playsOn.getPoints() > 0 && matchingCard.getPoint() > 10)) {
                 card = matchingCard;
                 currentHand.removeCard(card);

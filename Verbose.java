@@ -15,7 +15,7 @@ public class Verbose {
                                     , player.getVerboseHands().get(turn).getCard(1)
                                     , player.getVerboseHands().get(turn).getCard(2)
                                     , player.getVerboseHands().get(turn).getCard(3)))
-                    .append("Score "+ player.getPoint() +"; ");
+                    .append("Score "+ player.getPoint() +";\n");
 
         }
         System.out.println("Summary of the turn: ");
