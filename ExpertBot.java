@@ -26,13 +26,21 @@ public class ExpertBot extends Player{
         }
         else {
             Card matchingCard = findCard(currentHand,playsOn.getTopCard().getFace());
-            if(matchingCard != null && (matchingCard.getPoint() + playsOn.getPoints() > 0 && matchingCard.getPoint() > 10)) {
-                card = matchingCard;
-                currentHand.removeCard(card);
-                return(card);
+            if(matchingCard != null) {
+                if (hasJoker(currentHand) && matchingCard.getPoint() > findBestJoker(currentHand).getPoint() && matchingCard.getPoint() + playsOn.getPoints() > 0) {
+                    card = matchingCard;
+                    currentHand.removeCard(card);
+                    return(card);
+                }
+
+                else if (!hasJoker(currentHand) && matchingCard.getPoint() + playsOn.getPoints() > 0) {
+                    card = matchingCard;
+                    currentHand.removeCard(card);
+                    return(card);
+                }
             }
-            if(hasJoker(getHands().get(turn)) && (10 + playsOn.getPoints() > 0)) {
-                card = findCard(currentHand, "J");
+            if(hasJoker(currentHand) && (findBestJoker(currentHand).getPoint() + playsOn.getPoints() > 0)) {
+                card = findBestJoker(currentHand);
                 currentHand.removeCard(card);
                 return(card);
             }
@@ -75,5 +83,15 @@ public class ExpertBot extends Player{
             }
         }
         return bestCard;
+    }
+
+    public Card findBestJoker(Hand hand) {
+        Card bestJoker = findCard(hand, "J");
+        for (Card card: hand.getCards()) {
+            if (card.getFace().equals("J") && card.getPoint() > bestJoker.getPoint()) {
+                bestJoker = card;
+            }
+        }
+        return bestJoker;
     }
 }
