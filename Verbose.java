@@ -7,7 +7,7 @@ public class Verbose {
         this.players = players;
     }
     public void summary(int turn){
-        StringBuilder sb = new StringBuilder("Hand "+ (turn+1) +": ");
+        StringBuilder sb = new StringBuilder("Hand "+ (turn+1) +":\n");
         for (Player player : players) {
             sb.append(player.getName() +": ")
                     .append(String.format("{%s, %s, %s, %s} "
@@ -18,7 +18,7 @@ public class Verbose {
                     .append("Score "+ player.getPoint() +";\n");
 
         }
-        System.out.println("Summary of the turn: ");
+        System.out.println("\n\nSummary of the turn: ");
 
         for(int i=1; i<5; i++){
             sb.append("\n"+ i +". ");
@@ -47,5 +47,12 @@ public class Verbose {
                 return true;
         }
         return false;
+    }
+    public void succintSummary(){
+        System.out.println("\nPoints at the end of the turn:");
+        for(Player player: players){
+            System.out.print(""+player.getName()+": "+player.getPoint()+"pts    ");
+        }
+        System.out.println();
     }
 }
