@@ -7,7 +7,7 @@ public class RegularBot extends Player{
 
     @Override
     public Card play(int turn) {
-
+        System.out.printf("\n%s's turn: \n", getName());
         Hand currentHand = getHands().get(turn);
         Card card;
         if (isBoardEmpty(playsOn)) {

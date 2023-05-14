@@ -6,6 +6,7 @@ public class NoviceBot extends Player{
     
     @Override
     public Card play(int turn) {
+        System.out.printf("\n%s's turn: \n", getName());
         Random random = new Random();
         int chosenCard = random.nextInt(1, getHands().get(turn).size() + 1);
         Card playedCard = getHands().get(turn).getCard(chosenCard-1);

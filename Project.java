@@ -45,10 +45,9 @@ public class Project {
             if(verboseMode){
                 verbose.summary(turn);
                 board.view();
-            }else{
+            }else {
                 verbose.succintSummary();
                 board.view();
-
             }
                 
         }

@@ -11,6 +11,7 @@ public class ExpertBot extends Player{
 
     @Override
     public Card play(int turn) {
+        System.out.printf("\n%s's turn: \n", getName());
         Hand currentHand = getHands().get(turn);
         Card card = currentHand.getCard(0);
 
