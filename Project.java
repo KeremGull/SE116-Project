@@ -13,17 +13,18 @@ public class Project {
         deck.shuffle();
         deck.cut();
 
-        //Instantiating game objects (Board and Player)
-        Board board = new Board();
         int numberOfPlayers = Integer.parseInt(args[0]);
         boolean verboseMode = Boolean.parseBoolean(args[2]);
+
+        //Instantiating game objects (Board and Player)
+        Board board = new Board();
         ArrayList<Player> players = GameFuncs.setPlayers(args, numberOfPlayers,board);
-        //Dealing cards to players
+
+        //Dealing cards to board and players
         for(int i=51; i>47; i--){
             board.addCard(deck.getCards().get(i));
             PlayedCards.addCard(deck.getCards().get(i));
         }
-
         for(int i=deck.getCards().size()-5; i>=0;i--)
             players.get((47-i)% players.size()).addCard(deck.getCards().get(i));
 
@@ -61,11 +62,16 @@ public class Project {
             player.view();
             System.out.printf("%s: %dpts\n",player.getName(), player.getPoint());
         }
+        System.out.println("\n-----------------------------------------------------------------------------\n");
+        if(verboseMode){
+            verbose.gameSummary();
+            System.out.println("\n-----------------------------------------------------------------------------\n");
+        }
+
         String context = FileOps.readFile("TopPlayers.txt");
         ArrayList<TopPlayer> topPlayers = FileOps.getTopTen(context);
         FileOps.sortTopTen(topPlayers, players);
         FileOps.updateTopTen(topPlayers);
-
-
+        
     }
 }
